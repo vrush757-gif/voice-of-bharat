@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Voice of Bharat</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f8ff;
+    }
+    header {
+      background-color: #0078ff;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1.4em;
+      font-weight: bold;
+    }
+    .container {
+      width: 90%;
+      max-width: 900px;
+      margin: 30px auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    h2 {
+      color: #0078ff;
+      border-bottom: 2px solid #0078ff;
+      padding-bottom: 5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f0f7ff;
+    }
+    tr:hover {
+      background-color: #f9fcff;
+    }
+    .btn {
+      background-color: #0078ff;
+      color: white;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn.delete {
+      background-color: #ff4757;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      color: #555;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <header>👑 Voice of Bharat Admin Panel</header>
+  <div class="container">
+    <h2>Manage Posts</h2>
+    <table>
+      <tr>
+        <th>Username</th>
+        <th>Post</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td>@Aarav</td>
+        <td>India is rising. Speak your truth 🇮🇳✨</td>
+        <td>
+          <button class="btn">Approve</button>
+          <button class="btn delete">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>@Kiran</td>
+        <td>Voice of Bharat feels like the future 🔥</td>
+        <td>
+          <button class="btn">Approve</button>
+          <button class="btn delete">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <footer>© 2025 Voice of Bharat | Admin Control</footer>
+</body>
+</html>
