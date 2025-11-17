@@ -1,23 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Voice of Bharat IN</title>
-</head>
-
-<body style="font-family:Arial; text-align:center; padding-top:60px;">
-
-    <h1>Welcome to Voice of Bharat IN</h1>
-    <p>This is the beginning of something great!</p>
-
-    <br><br>
-
-    <a href="/login">
-        <button style="padding:12px 25px; font-size:16px;">Login</button>
-    </a>
-
-    <a href="/signup">
-        <button style="padding:12px 25px; font-size:16px; margin-left:10px;">Signup</button>
-    </a>
-
-</body>
-</html>
+<!-- templates/index.html -->
+{% extends "layout.html" %}
+{% block content %}
+  <section class="hero">
+    <h1>Welcome to Voice of Bharat</h1>
+    <p class="lead">A lightweight simple feed demo. Post, like, and repost.</p>
+    <p>
+      <a class="btn" href="{{ url_for('create_post') }}">Create a post</a>
+      <a class="btn ghost" href="{{ url_for('feed') }}">See feed</a>
+    </p>
+  </section>
+{% endblock %}
