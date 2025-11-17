@@ -1,138 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Feed | Mini Twitter</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
-            margin: 0;
-            padding: 0;
-        }
-        .navbar {
-            background-color: #1da1f2;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            margin-left: 15px;
-        }
-        .container {
-            width: 90%;
-            max-width: 700px;
-            margin: 30px auto;
-        }
-        .post {
-            background: white;
-            border-radius: 12px;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .post h3 {
-            margin: 0;
-            color: #333;
-        }
-        .post p {
-            color: #555;
-        }
-        .post small {
-            color: #777;
-        }
-        .buttons {
-            margin-top: 10px;
-        }
-        .buttons a {
-            text-decoration: none;
-            margin-right: 15px;
-            color: #1da1f2;
-            font-weight: bold;
-        }
-        .comment-box {
-            margin-top: 15px;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
-        }
-        .comment-box form {
-            display: flex;
-            gap: 10px;
-        }
-        .comment-box input[type="text"] {
-            flex: 1;
-            padding: 5px;
-        }
-        .comment-box button {
-            background: #1da1f2;
-            border: none;
-            color: white;
-            padding: 6px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .comment {
-            margin-top: 8px;
-            background: #f1f1f1;
-            padding: 6px 10px;
-            border-radius: 6px;
-        }
-        .comment small {
-            color: #666;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="navbar">
-        <div><b>Mini Twitter</b></div>
-        <div>
-            <a href="/create_post">+ New Post</a>
-            <a href="/profile/{{ session['username'] }}">Profile</a>
-            <a href="/logout">Logout</a>
+<!-- templates/feed.html -->
+{% extends "layout.html" %}
+{% block content %}
+  <h2>Feed</h2>
+  {% if posts|length == 0 %}
+    <div class="empty">No posts yet. Be the first — <a href="{{ url_for('create_post') }}">create one</a>.</div>
+  {% endif %}
+  <div class="posts">
+    {% for p in posts %}
+      <article class="post-card">
+        <div class="post-meta">
+          <strong>{{ p['username'] }}</strong>
+          <time>{{ p['created_at'] }}</time>
         </div>
-    </div>
-
-    <div class="container">
-        {% if posts %}
-            {% for post in posts %}
-            <div class="post">
-                <h3>@{{ post.username }}</h3>
-                <p>{{ post.content }}</p>
-                <small>Posted on {{ post.created_at }}</small>
-
-                <div class="buttons">
-                    <a href="/like/{{ post.id }}">❤️ Like ({{ post.likes }})</a>
-                    <a href="/repost/{{ post.id }}">🔁 Repost</a>
-                </div>
-
-                <div class="comment-box">
-                    <form method="POST" action="/comment/{{ post.id }}">
-                        <input type="text" name="comment_text" placeholder="Write a comment..." required>
-                        <button type="submit">Post</button>
-                    </form>
-
-                    {% if post.comments %}
-                        {% for c in post.comments %}
-                            <div class="comment">
-                                <b>@{{ c.username }}</b>: {{ c.comment_text }}
-                                <br><small>{{ c.created_at }}</small>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
-        {% else %}
-            <p>No posts yet. Create one!</p>
-        {% endif %}
-    </div>
-
-</body>
-</html>
-``
+        <p class="post-content">{{ p['content'] }}</p>
+        <div class="post-actions">
+          <a class="tiny" href="{{ url_for('like', post_id=p['id']) }}">❤️ Like ({{ p['likes'] }})</a>
+          <a class="tiny" href="{{ url_for('repost', post_id=p['id']) }}">🔁 Repost ({{ p['reposts'] }})</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+{% endblock %}
