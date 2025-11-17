@@ -49,9 +49,7 @@ def init_db():
     db.commit()
 
 
-@app.before_first_request
-def startup():
-    # ensure DB exists and tables created
+with app.app_context():
     init_db()
 
 
