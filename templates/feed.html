@@ -1,23 +1,21 @@
-<!-- templates/feed.html -->
-{% extends "layout.html" %}
-{% block content %}
-  <h2>Feed</h2>
-  {% if posts|length == 0 %}
-    <div class="empty">No posts yet. Be the first — <a href="{{ url_for('create_post') }}">create one</a>.</div>
-  {% endif %}
-  <div class="posts">
-    {% for p in posts %}
-      <article class="post-card">
-        <div class="post-meta">
-          <strong>{{ p['username'] }}</strong>
-          <time>{{ p['created_at'] }}</time>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feed</title>
+</head>
+<body>
+    <h1>Feed</h1>
+
+    {% for post in posts %}
+        <div style="border:1px solid #aaa; padding:10px; margin:10px 0;">
+            <p>{{ post[1] }}</p>
+            <a href="/like/{{ post[0] }}">❤️ {{ post[2] }}</a>
+            &nbsp;&nbsp;
+            <a href="/repost/{{ post[0] }}">🔁 {{ post[3] }}</a>
         </div>
-        <p class="post-content">{{ p['content'] }}</p>
-        <div class="post-actions">
-          <a class="tiny" href="{{ url_for('like', post_id=p['id']) }}">❤️ Like ({{ p['likes'] }})</a>
-          <a class="tiny" href="{{ url_for('repost', post_id=p['id']) }}">🔁 Repost ({{ p['reposts'] }})</a>
-        </div>
-      </article>
     {% endfor %}
-  </div>
-{% endblock %}
+
+    <br>
+    <a href="/create">+ Create New Post</a>
+</body>
+</html>
