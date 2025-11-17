@@ -1,56 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Create Post 🖼️</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #e6ecf0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    form {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 350px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    textarea {
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 10px;
-      resize: none;
-      margin-bottom: 10px;
-    }
-    input[type="file"] {
-      margin-bottom: 10px;
-    }
-    button {
-      background: #1da1f2;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 20px;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #1991da;
-    }
-  </style>
-</head>
-<body>
-  <form action="{{ url_for('create_post') }}" method="POST" enctype="multipart/form-data">
-    <h2>Create a Post</h2>
-    <textarea name="caption" rows="3" placeholder="What's happening?" required></textarea><br>
-    <input type="file" name="image"><br>
-    <button type="submit">Post</button><br><br>
-    <a href="{{ url_for('feed') }}">Back to Feed</a>
+<!-- templates/create_post.html -->
+{% extends "layout.html" %}
+{% block content %}
+  <h2>Create a post</h2>
+  {% if error %}
+    <div class="error">{{ error }}</div>
+  {% endif %}
+  <form method="post" class="card form-card">
+    <label>Username (optional)
+      <input name="username" placeholder="Your name (or leave blank)" />
+    </label>
+
+    <label>Content
+      <textarea name="content" rows="4" placeholder="Share something..."></textarea>
+    </label>
+
+    <div>
+      <button class="btn" type="submit">Post</button>
+      <a class="btn ghost" href="{{ url_for('feed') }}">Back to feed</a>
+    </div>
   </form>
-</body>
-</html>
+{% endblock %}
