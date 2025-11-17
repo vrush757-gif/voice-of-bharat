@@ -40,7 +40,7 @@ def create():
         if content:
             conn = sqlite3.connect("database.db")
             cur = conn.cursor()
-            cur.execute("INSERT INTO posts (content) VALUES (?)", (content,))
+            cur.execute("INSERT INTO posts (content) VALUES (?)", (content,)) 
             conn.commit()
             conn.close()
             return redirect(url_for("feed"))
