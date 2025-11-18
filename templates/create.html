@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Create - ScrollBreaker</title>
+    <meta charset="UTF-8">
+    <title>Create Post - ScrollBreaker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <div class="nav">
-    <h2>CREATE</h2>
-    <a href="/feed" class="small-btn">Back</a>
+    <a href="/" class="nav-btn">Home</a>
+    <a href="/feed" class="nav-btn">Feed</a>
 </div>
 
 <div class="container">
-    <form method="POST">
-        <textarea name="content" placeholder="Write your truth…" required></textarea>
-        <button class="btn" type="submit">Post</button>
+    <h2 class="feed-title">CREATE A POST</h2>
+
+    <form method="POST" class="form-box">
+        <textarea name="content" placeholder="Write your truth..." required></textarea>
+        <button type="submit" class="btn">Post</button>
     </form>
 </div>
 
