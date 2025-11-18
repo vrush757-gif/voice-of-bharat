@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>ScrollBreaker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Welcome</h1>
-    <a href="/feed">Go to Feed</a>
+
+<div class="nav">
+    <h2>SCROLLBREAKER</h2>
+</div>
+
+<div class="container center">
+    <h1 class="hero">Break The Loop.</h1>
+    <p class="sub">A platform for those who refuse to be trapped by the infinite scroll.</p>
+
+    <a class="btn" href="/feed">Enter Feed</a>
+</div>
+
 </body>
 </html>
