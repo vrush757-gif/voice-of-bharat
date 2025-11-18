@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Feed</title>
+    <title>Feed - ScrollBreaker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Feed</h1>
 
-    {% for post in posts %}
-        <div style="border:1px solid #aaa; padding:10px; margin:10px 0;">
-            <p>{{ post[1] }}</p>
-            <a href="/like/{{ post[0] }}">❤️ {{ post[2] }}</a>
-            &nbsp;&nbsp;
-            <a href="/repost/{{ post[0] }}">🔁 {{ post[3] }}</a>
+<div class="nav">
+    <h2>FEED</h2>
+    <a href="/create" class="small-btn">Create</a>
+</div>
+
+<div class="container">
+
+    {% for p in posts %}
+    <div class="post">
+        <p class="content">{{ p[1] }}</p>
+
+        <div class="actions">
+            <a href="/like/{{ p[0] }}">❤️ {{ p[2] }}</a>
+            <a href="/repost/{{ p[0] }}">🔁 {{ p[3] }}</a>
         </div>
+    </div>
     {% endfor %}
 
-    <br>
-    <a href="/create">+ Create New Post</a>
+</div>
+
 </body>
 </html>
