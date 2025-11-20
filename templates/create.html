@@ -1,21 +1,30 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Create Post</title>
+  <meta charset="utf-8" />
+  <title>Create — Voice of Bharat</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-    <h1>Create a Post</h1>
+<body class="bg">
+  <header class="topbar">
+    <div class="brand">VOICE OF BHARAT</div>
+    <nav class="nav">
+      <a href="/" class="link">Home</a>
+      <a href="/feed" class="link">Feed</a>
+    </nav>
+  </header>
 
-    <a href="/">Home</a>
-    <a href="/feed" style="margin-left:20px;">Feed</a>
+  <main class="container">
+    <h2 class="section-title">Create a Post</h2>
 
-    <hr>
-
-    <form method="POST">
-        <textarea name="content" rows="5" cols="40" placeholder="Write something..." required></textarea>
-        <br><br>
-
-        <button type="submit">Publish Post</button>
+    <form method="POST" class="form-card">
+      <textarea name="content" placeholder="Write your truth..." required></textarea>
+      <div class="form-row">
+        <button class="btn" type="submit">Post</button>
+        <a class="btn-ghost" href="/feed">Cancel</a>
+      </div>
     </form>
+  </main>
 </body>
 </html>
