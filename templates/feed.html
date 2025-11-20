@@ -1,42 +1,87 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Feed — Voice of Bharat</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body class="bg">
-  <header class="topbar">
-    <div class="brand">VOICE OF BHARAT</div>
-    <nav class="nav">
-      <a href="/" class="link">Home</a>
-      <a href="/create" class="link">Create</a>
-    </nav>
-  </header>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feed • Voice of Bharat</title>
 
-  <main class="container">
-    <h2 class="section-title">The Feed</h2>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .post {
+            background: #1a1a1a;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+
+        .content {
+            font-size: 18px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            background: #ffffff;
+            border: none;
+            padding: 8px 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .empty {
+            font-size: 20px;
+            color: #888;
+            text-align: center;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Voices of Bharat</h1>
 
     {% if posts|length == 0 %}
-      <div class="empty">No posts yet — be the first to speak.</div>
+        <p class="empty">No posts yet. Be the first to speak.</p>
+    {% else %}
+        {% for post in posts %}
+            <div class="post">
+                <div class="content">{{ post[1] }}</div>
+
+                <div class="actions">
+                    <form action="{{ url_for('like_post', post_id=post[0]) }}" method="POST">
+                        <button type="submit">❤️ {{ post[2] }}</button>
+                    </form>
+
+                    <form action="{{ url_for('repost_post', post_id=post[0]) }}" method="POST">
+                        <button type="submit">🔁 {{ post[3] }}</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
     {% endif %}
 
-    <section class="posts">
-      {% for p in posts %}
-      <article class="post-card">
-        <div class="post-content">{{ p[1] }}</div>
-
-        <div class="post-meta">
-          <div class="meta-left">
-            <a class="action" href="/like/{{ p[0] }}">❤️ {{ p[2] }}</a>
-            <a class="action" href="/repost/{{ p[0] }}">🔁 {{ p[3] }}</a>
-          </div>
-          <div class="meta-time">{{ p[0] }}</div>
-        </div>
-      </article>
-      {% endfor %}
-    </section>
-  </main>
 </body>
 </html>
