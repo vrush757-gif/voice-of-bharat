@@ -1,12 +1,89 @@
-<!-- templates/index.html -->
-{% extends "layout.html" %}
-{% block content %}
-  <section class="hero">
-    <h1>Welcome to Voice of Bharat</h1>
-    <p class="lead">A lightweight simple feed demo. Post, like, and repost.</p>
-    <p>
-      <a class="btn" href="{{ url_for('create_post') }}">Create a post</a>
-      <a class="btn ghost" href="{{ url_for('feed') }}">See feed</a>
-    </p>
-  </section>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voice of Bharat – Feed</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0d0d0d;
+            color: white;
+        }
+
+        .navbar {
+            background: #111;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 22px;
+            color: #ffcc00;
+        }
+
+        .navbar a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .post {
+            background: #1a1a1a;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            border: 1px solid #333;
+        }
+
+        .post h2 {
+            margin: 0;
+            color: #ffcc00;
+            font-size: 20px;
+        }
+
+        .timestamp {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .post p {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>Voice of Bharat</h1>
+        <a href="/write">➕ Write</a>
+    </div>
+
+    <div class="container">
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post">
+                    <h2>{{ post[1] }}</h2>
+                    <div class="timestamp">{{ post[3] }}</div>
+                    <p>{{ post[2] }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No posts yet. Start writing something powerful!</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
