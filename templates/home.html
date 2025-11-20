@@ -1,12 +1,32 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Voice of Bharat</title>
+  <meta charset="utf-8" />
+  <title>Voice of Bharat</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-    <h1>Voice of Bharat</h1>
+<body class="bg">
+  <header class="topbar">
+    <div class="brand">VOICE OF BHARAT</div>
+    <nav class="nav">
+      <a href="/feed" class="link">Feed</a>
+      <a href="/create" class="link">Create</a>
+    </nav>
+  </header>
 
-    <a href="/feed">Go to Feed</a><br><br>
-    <a href="/create">Create a Post</a>
+  <main class="center">
+    <h1 class="hero">Break the loop.</h1>
+    <p class="lead">A quiet movement. Loud truths. Minimal distractions.</p>
+
+    <div class="cta-row">
+      <a class="btn" href="/feed">Enter Feed</a>
+      <a class="btn-ghost" href="/create">Write</a>
+    </div>
+
+    <footer class="foot">
+      <small>Made with purpose — Voice of Bharat</small>
+    </footer>
+  </main>
 </body>
 </html>
