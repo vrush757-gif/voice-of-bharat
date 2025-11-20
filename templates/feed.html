@@ -1,28 +1,42 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Feed</title>
+  <meta charset="utf-8" />
+  <title>Feed — Voice of Bharat</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-    <h1>Feed</h1>
+<body class="bg">
+  <header class="topbar">
+    <div class="brand">VOICE OF BHARAT</div>
+    <nav class="nav">
+      <a href="/" class="link">Home</a>
+      <a href="/create" class="link">Create</a>
+    </nav>
+  </header>
 
-    <a href="/">Home</a>
-    <a href="/create" style="margin-left:20px;">Create Post</a>
+  <main class="container">
+    <h2 class="section-title">The Feed</h2>
 
-    <hr>
+    {% if posts|length == 0 %}
+      <div class="empty">No posts yet — be the first to speak.</div>
+    {% endif %}
 
-    {% for post in posts %}
-        <div style="margin-bottom:20px; padding:10px; border:1px solid black;">
-            <p>{{ post[1] }}</p>
+    <section class="posts">
+      {% for p in posts %}
+      <article class="post-card">
+        <div class="post-content">{{ p[1] }}</div>
 
-            <p>Likes: {{ post[2] }}  
-                <a href="/like/{{ post[0] }}">Like</a>
-            </p>
-
-            <p>Reposts: {{ post[3] }}  
-                <a href="/repost/{{ post[0] }}">Repost</a>
-            </p>
+        <div class="post-meta">
+          <div class="meta-left">
+            <a class="action" href="/like/{{ p[0] }}">❤️ {{ p[2] }}</a>
+            <a class="action" href="/repost/{{ p[0] }}">🔁 {{ p[3] }}</a>
+          </div>
+          <div class="meta-time">{{ p[0] }}</div>
         </div>
-    {% endfor %}
+      </article>
+      {% endfor %}
+    </section>
+  </main>
 </body>
 </html>
