@@ -1,89 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Voice of Bharat – Feed</title>
+    <title>Voice of Bharat</title>
     <style>
         body {
-            margin: 0;
+            background: #000;
+            color: #fff;
             font-family: Arial, sans-serif;
-            background: #0d0d0d;
-            color: white;
-        }
-
-        .navbar {
-            background: #111;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #222;
-        }
-
-        .navbar h1 {
-            margin: 0;
-            font-size: 22px;
-            color: #ffcc00;
-        }
-
-        .navbar a {
-            color: #ffcc00;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .container {
             padding: 20px;
         }
 
-        .post {
-            background: #1a1a1a;
-            padding: 18px;
-            border-radius: 8px;
-            margin-bottom: 18px;
-            border: 1px solid #333;
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .post h2 {
-            margin: 0;
-            color: #ffcc00;
-            font-size: 20px;
+        .post-box {
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
 
-        .timestamp {
-            font-size: 12px;
-            color: #888;
+        .post-title {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .post-content {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        small {
+            color: #aaa;
+        }
+
+        .btn {
+            display: block;
+            text-align: center;
+            background: #fff;
+            color: #000;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
             margin-top: 5px;
-            margin-bottom: 10px;
         }
 
-        .post p {
-            font-size: 15px;
-            line-height: 1.5;
-            color: #ddd;
+        .top-btn {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        a {
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
-    <div class="navbar">
-        <h1>Voice of Bharat</h1>
-        <a href="/write">➕ Write</a>
-    </div>
+    <!-- TOP BUTTON: WRITE POST -->
+    <a href="/write" class="btn top-btn">Write Post</a>
 
-    <div class="container">
-        {% if posts %}
-            {% for post in posts %}
-                <div class="post">
-                    <h2>{{ post[1] }}</h2>
-                    <div class="timestamp">{{ post[3] }}</div>
-                    <p>{{ post[2] }}</p>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No posts yet. Start writing something powerful!</p>
-        {% endif %}
-    </div>
+    <h1>Voice of Bharat</h1>
+
+    <!-- LOOP THROUGH POSTS -->
+    {% for p in posts %}
+        <div class="post-box">
+
+            <div class="post-title">
+                {{ p[1] }}
+            </div>
+
+            <div class="post-content">
+                {{ p[2] }}
+            </div>
+
+            <small>{{ p[3] }}</small>
+
+            <!-- View full post -->
+            <a href="/post/{{ p[0] }}" class="btn">View Post</a>
+
+        </div>
+    {% endfor %}
+
+    {% if posts|length == 0 %}
+        <p style="text-align:center; color:#aaa;">No posts yet. Be the first to write!</p>
+    {% endif %}
 
 </body>
 </html>
