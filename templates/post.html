@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ post[1] }}</title>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            font-family: Arial;
+            padding: 20px;
+        }
+        .post-box {
+            padding:20px;
+            border:1px solid #444;
+            border-radius:10px;
+            margin-bottom:20px;
+        }
+        .comment-box {
+            margin-top:20px;
+            padding:15px;
+            border:1px solid #333;
+            border-radius:8px;
+        }
+        input, textarea {
+            width:100%;
+            padding:10px;
+            border-radius:5px;
+            border:none;
+            margin-top:10px;
+        }
+        button {
+            width:100%;
+            padding:12px;
+            background:#fff;
+            color:#000;
+            font-weight:bold;
+            border:none;
+            border-radius:6px;
+            margin-top:10px;
+        }
+        a {
+            color:#fff;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/">⬅ Back</a>
+
+    <div class="post-box">
+        <h2>{{ post[1] }}</h2>
+        <p>{{ post[2] }}</p>
+        <small>{{ post[3] }}</small>
+    </div>
+
+    <h3>Comments</h3>
+
+    {% for c in comments %}
+        <div class="comment-box">
+            <p>{{ c[0] }}</p>
+            <small>{{ c[1] }}</small>
+        </div>
+    {% endfor %}
+
+    <form action="/comment/{{ post[0] }}" method="POST">
+        <textarea name="comment" placeholder="Write a comment..." required></textarea>
+        <button type="submit">Post Comment</button>
+    </form>
+
+</body>
+</html>
