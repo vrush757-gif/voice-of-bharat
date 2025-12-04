@@ -34,5 +34,5 @@ def process_audio():
 
     return jsonify({"reply": ai_reply})
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     app.run(debug=True)
