@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import openai
-import base64
+import base64 
 
 app = Flask(__name__)
 
