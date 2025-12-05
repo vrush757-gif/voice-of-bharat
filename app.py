@@ -4,7 +4,7 @@ import openai
 import os
 from gtts import gTTS
 
-app = Flask(__name__)
+app = Flask(__name__) 
 CORS(app)
 
 # ----------------------------
