@@ -1,95 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Voice of Bharat</title>
-
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
             background: #000;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            color: white;
+            text-align: center;
+            font-family: Arial;
+            margin-top: 120px;
         }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-
-        #responseBox {
-            width: 90%;
-            max-width: 600px;
-            min-height: 120px;
-            padding: 15px;
-            border: 2px solid #fff;
-            border-radius: 10px;
-            margin-top: 20px;
-            font-size: 1.2rem;
-        }
-
         button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            margin: 10px;
-            background: #ff9800;
+            padding: 18px 30px;
+            background: orange;
             border: none;
-            border-radius: 10px;
+            font-size: 20px;
+            border-radius: 15px;
             cursor: pointer;
-            color: #000;
-        }
-
-        button:hover {
-            background: #ffa726;
         }
     </style>
 </head>
 
 <body>
-
     <h1>Voice of Bharat</h1>
+    <h3 id="status">Click Speak</h3>
     <button onclick="startRecording()">🎤 Speak</button>
 
-    <div id="responseBox">Your AI reply will appear here...</div>
-
     <script>
-        async function startRecording() {
-            const responseBox = document.getElementById("responseBox");
-            responseBox.innerHTML = "Listening... 🎧";
+        let mediaRecorder;
+        let audioChunks = [];
 
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            const mediaRecorder = new MediaRecorder(stream);
-            let audioChunks = [];
+        function startRecording() {
+            document.getElementById("status").innerText = "Listening... 🎧";
 
-            mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-            mediaRecorder.onstop = async () => {
-                let audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-                let formData = new FormData();
-                formData.append("audio", audioBlob, "audio.wav");
+            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+                mediaRecorder = new MediaRecorder(stream);
+                mediaRecorder.start();
 
-                let result = await fetch("/process_audio", {
-                    method: "POST",
-                    body: formData
-                });
+                mediaRecorder.ondataavailable = e => {
+                    audioChunks.push(e.data);
+                };
 
-                let data = await result.json();
-                responseBox.innerHTML = data.reply;
-            };
+                mediaRecorder.onstop = sendAudioToServer;
 
-            mediaRecorder.start();
+                setTimeout(() => {
+                    mediaRecorder.stop();
+                    document.getElementById("status").innerText = "Processing...";
+                }, 3000);
+            });
+        }
 
-            setTimeout(() => {
-                mediaRecorder.stop();
-            }, 4000);
+        function sendAudioToServer() {
+            const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+            const formData = new FormData();
+            formData.append("audio", audioBlob, "input.wav");
+
+            fetch("https://voice-of-bharat.onrender.com/process_audio", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const audioURL = URL.createObjectURL(blob);
+                const audio = new Audio(audioURL);
+                audio.play();
+                document.getElementById("status").innerText = "Click Speak";
+                audioChunks = [];
+            })
+            .catch(err => {
+                document.getElementById("status").innerText = "Error. Try again.";
+                console.error(err);
+            });
         }
     </script>
-
 </body>
 </html>
