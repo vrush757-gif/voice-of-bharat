@@ -4,74 +4,59 @@
     <title>Voice of Bharat</title>
     <style>
         body {
-            background: #000;
+            background: #0f172a;
             color: white;
-            text-align: center;
             font-family: Arial;
-            margin-top: 120px;
+            text-align: center;
+            padding: 40px;
+        }
+        input {
+            width: 80%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            margin-top: 20px;
         }
         button {
-            padding: 18px 30px;
-            background: orange;
+            padding: 15px 30px;
+            margin-top: 10px;
+            border-radius: 10px;
+            background: gold;
             border: none;
-            font-size: 20px;
-            border-radius: 15px;
-            cursor: pointer;
+            font-size: 16px;
+        }
+        #reply {
+            margin-top: 30px;
+            font-size: 18px;
+            color: #4ade80;
         }
     </style>
 </head>
-
 <body>
-    <h1>Voice of Bharat</h1>
-    <h3 id="status">Click Speak</h3>
-    <button onclick="startRecording()">🎤 Speak</button>
 
-    <script>
-        let mediaRecorder;
-        let audioChunks = [];
+<h1>Voice of Bharat</h1>
 
-        function startRecording() {
-            document.getElementById("status").innerText = "Listening... 🎧";
+<input id="text" placeholder="Type something...">
+<br>
+<button onclick="sendText()">Send</button>
 
-            navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-                mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.start();
+<div id="reply"></div>
 
-                mediaRecorder.ondataavailable = e => {
-                    audioChunks.push(e.data);
-                };
+<script>
+function sendText() {
+    const text = document.getElementById('text').value;
 
-                mediaRecorder.onstop = sendAudioToServer;
+    fetch('/api/chat', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ text })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById('reply').innerText = data.reply;
+    });
+}
+</script>
 
-                setTimeout(() => {
-                    mediaRecorder.stop();
-                    document.getElementById("status").innerText = "Processing...";
-                }, 3000);
-            });
-        }
-
-        function sendAudioToServer() {
-            const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-            const formData = new FormData();
-            formData.append("audio", audioBlob, "input.wav");
-
-            fetch("https://voice-of-bharat.onrender.com/process_audio", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                const audioURL = URL.createObjectURL(blob);
-                const audio = new Audio(audioURL);
-                audio.play();
-                document.getElementById("status").innerText = "Click Speak";
-                audioChunks = [];
-            })
-            .catch(err => {
-                document.getElementById("status").innerText = "Error. Try again.";
-                console.error(err);
-            });
-        }
-    </script>
 </body>
 </html>
