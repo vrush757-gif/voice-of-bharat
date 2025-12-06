@@ -34,7 +34,7 @@ def process_audio():
         )
 
         user_text = transcript.text
-        print("User said:", user_text)
+        print("User said:", user_text) 
 
         # ----------------------------
         # 2️⃣ Send Text → ChatGPT
